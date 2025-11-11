@@ -170,30 +170,57 @@ class _MacroIndicatorsState extends State<MacroIndicators>
             ],
           ),
 
-          // Expanded details
-          if (_isExpanded && widget.expandable)
-            Padding(
-              padding: EdgeInsets.only(
-                top: ONTDesignTokens.spacing16,
-              ),
-              child: _MacroBreakdown(
-                macroData: widget.macroData,
-              ),
-            ),
-
-          // Expand hint (if expandable and not expanded)
-          if (widget.expandable && !_isExpanded)
+          // Expand hint with chevron (if expandable)
+          if (widget.expandable)
             Padding(
               padding: EdgeInsets.only(
                 top: ONTDesignTokens.spacing8,
               ),
-              child: Text(
-                'Tap for details',
-                style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                  color: Theme.of(context).colorScheme.onSurfaceVariant,
+              child: AnimatedOpacity(
+                opacity: _isExpanded ? 0.0 : 1.0,
+                duration: const Duration(milliseconds: 200),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    RotatedBox(
+                      quarterTurns: _isExpanded ? 2 : 0,
+                      child: AnimatedRotation(
+                        turns: _isExpanded ? 0.5 : 0,
+                        duration: const Duration(milliseconds: 300),
+                        child: Icon(
+                          Icons.expand_more,
+                          size: 20,
+                          color: Theme.of(context).colorScheme.onSurfaceVariant,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 4),
+                    Text(
+                      'Tap for details',
+                      style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                        color: Theme.of(context).colorScheme.onSurfaceVariant,
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),
+
+          // Expanded details with smooth animation
+          AnimatedSize(
+            duration: const Duration(milliseconds: 300),
+            curve: Curves.easeOutCubic,
+            child: _isExpanded && widget.expandable
+                ? Padding(
+                    padding: EdgeInsets.only(
+                      top: ONTDesignTokens.spacing16,
+                    ),
+                    child: _MacroBreakdown(
+                      macroData: widget.macroData,
+                    ),
+                  )
+                : const SizedBox(height: 0),
+          ),
         ],
       ),
     );
