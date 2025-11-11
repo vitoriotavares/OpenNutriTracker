@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/styles/design_tokens.dart';
+import '../../../../core/utils/micro_interactions.dart';
 
 /// Quick Add Button for Meal Sections
 ///
@@ -132,10 +133,14 @@ class _QuickAddButtonState extends State<QuickAddButton>
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(
-            Icons.add,
-            size: widget.iconSize - 4,
-            color: foregroundColor,
+          PulseAnimation(
+            duration: const Duration(milliseconds: 2000),
+            minOpacity: 0.6,
+            child: Icon(
+              Icons.add,
+              size: widget.iconSize - 4,
+              color: foregroundColor,
+            ),
           ),
           SizedBox(width: ONTDesignTokens.spacing4),
           Text(
@@ -170,10 +175,14 @@ class _QuickAddButtonState extends State<QuickAddButton>
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(
-            Icons.add,
-            size: widget.iconSize - 4,
-            color: foregroundColor,
+          PulseAnimation(
+            duration: const Duration(milliseconds: 2000),
+            minOpacity: 0.6,
+            child: Icon(
+              Icons.add,
+              size: widget.iconSize - 4,
+              color: foregroundColor,
+            ),
           ),
           SizedBox(width: ONTDesignTokens.spacing4),
           Text(

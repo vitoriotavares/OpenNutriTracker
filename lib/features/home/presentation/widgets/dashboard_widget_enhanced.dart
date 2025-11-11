@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/styles/design_tokens.dart';
+import '../../../../core/utils/micro_interactions.dart';
 import '../../../../core/widgets/cards/modern_card.dart';
 import '../../../../core/widgets/charts/calorie_ring_chart.dart';
 import '../../../../core/widgets/charts/macro_indicators.dart';
@@ -185,10 +186,14 @@ class _CalorieSummaryItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Icon(
-          icon,
-          size: ONTDesignTokens.iconSizeMedium,
-          color: Theme.of(context).colorScheme.primary,
+        PulseAnimation(
+          duration: const Duration(milliseconds: 2000),
+          minOpacity: 0.7,
+          child: Icon(
+            icon,
+            size: ONTDesignTokens.iconSizeMedium,
+            color: Theme.of(context).colorScheme.primary,
+          ),
         ),
         SizedBox(height: ONTDesignTokens.spacing4),
         Text(
