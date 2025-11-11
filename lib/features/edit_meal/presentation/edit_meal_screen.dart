@@ -9,6 +9,7 @@ import 'package:opennutritracker/core/utils/custom_text_input_formatter.dart';
 import 'package:opennutritracker/core/utils/extensions.dart';
 import 'package:opennutritracker/core/utils/locator.dart';
 import 'package:opennutritracker/core/utils/navigation_options.dart';
+import 'package:opennutritracker/core/widgets/loaders/shimmer_skeleton.dart';
 import 'package:opennutritracker/features/add_meal/domain/entity/meal_entity.dart';
 import 'package:opennutritracker/features/edit_meal/presentation/bloc/edit_meal_bloc.dart';
 import 'package:opennutritracker/features/edit_meal/presentation/widgets/default_meal_image.dart';
@@ -148,7 +149,10 @@ class _EditMealScreenState extends State<EditMealScreen> {
 
   Widget _getLoadingContent() {
     return const Center(
-      child: CircularProgressIndicator(),
+      child: PulseProgressIndicator(
+        size: 60,
+        strokeWidth: 4,
+      ),
     );
   }
 

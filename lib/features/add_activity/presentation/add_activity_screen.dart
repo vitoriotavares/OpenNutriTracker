@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:opennutritracker/core/presentation/widgets/error_dialog.dart';
 import 'package:opennutritracker/core/utils/locator.dart';
+import 'package:opennutritracker/core/widgets/loaders/shimmer_skeleton.dart';
 import 'package:opennutritracker/features/add_activity/presentation/bloc/activities_bloc.dart';
 import 'package:opennutritracker/features/add_activity/presentation/bloc/recent_activities_bloc.dart';
 import 'package:opennutritracker/features/add_activity/presentation/widgets/activity_item_card.dart';
@@ -92,9 +93,15 @@ class _AddActivityScreenState extends State<AddActivityScreen>
                             return const SizedBox();
                           }
                           if (state is ActivitiesLoadingState) {
-                            return const Padding(
-                              padding: EdgeInsets.only(top: 32),
-                              child: CircularProgressIndicator(),
+                            return Flexible(
+                              child: Padding(
+                                padding: const EdgeInsets.only(top: 16.0),
+                                child: ShimmerListSkeleton(
+                                  itemCount: 5,
+                                  itemHeight: 100,
+                                  padding: const EdgeInsets.all(0),
+                                ),
+                              ),
                             );
                           }
                           if (state is ActivitiesLoadedState) {
@@ -133,9 +140,13 @@ class _AddActivityScreenState extends State<AddActivityScreen>
                             return const SizedBox();
                           }
                           if (state is RecentActivitiesLoadingState) {
-                            return const Padding(
-                              padding: EdgeInsets.only(top: 32),
-                              child: CircularProgressIndicator(),
+                            return Padding(
+                              padding: const EdgeInsets.only(top: 16.0),
+                              child: ShimmerListSkeleton(
+                                itemCount: 3,
+                                itemHeight: 100,
+                                padding: const EdgeInsets.all(0),
+                              ),
                             );
                           }
                           if (state is RecentActivitiesLoadedState) {

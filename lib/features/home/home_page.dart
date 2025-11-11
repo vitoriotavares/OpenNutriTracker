@@ -10,6 +10,7 @@ import 'package:opennutritracker/core/presentation/widgets/edit_dialog.dart';
 import 'package:opennutritracker/core/presentation/widgets/delete_dialog.dart';
 import 'package:opennutritracker/core/presentation/widgets/disclaimer_dialog.dart';
 import 'package:opennutritracker/core/utils/locator.dart';
+import 'package:opennutritracker/core/widgets/loaders/shimmer_skeleton.dart';
 import 'package:opennutritracker/features/add_meal/presentation/add_meal_type.dart';
 import 'package:opennutritracker/features/home/presentation/bloc/home_bloc.dart';
 import 'package:opennutritracker/features/home/presentation/widgets/dashboard_widget_enhanced.dart';
@@ -89,9 +90,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
   }
 
   Widget _getLoadingContent() {
-    return const Center(
-      child: CircularProgressIndicator(),
-    );
+    return const ShimmerDashboardSkeleton();
   }
 
   Widget _getLoadedContent(
