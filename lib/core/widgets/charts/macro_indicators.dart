@@ -565,7 +565,7 @@ class ResponsiveMacroIndicators extends StatelessWidget {
       builder: (context, constraints) {
         // Adjust indicator radius based on screen width
         final availableWidth = constraints.maxWidth;
-        final indicatorRadius = ((availableWidth / 6).clamp(40, 60) as double);
+        final indicatorRadius = (availableWidth / 6).clamp(40.0, 60.0);
 
         return MacroIndicators(
           macroData: macroData,
