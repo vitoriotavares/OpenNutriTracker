@@ -13,6 +13,7 @@ import 'package:opennutritracker/core/utils/env.dart';
 import 'package:opennutritracker/core/utils/locator.dart';
 import 'package:opennutritracker/core/utils/logger_config.dart';
 import 'package:opennutritracker/core/utils/navigation_options.dart';
+import 'package:opennutritracker/core/utils/page_transitions.dart';
 import 'package:opennutritracker/core/utils/theme_mode_provider.dart';
 import 'package:opennutritracker/features/activity_detail/activity_detail_screen.dart';
 import 'package:opennutritracker/features/add_meal/presentation/add_meal_screen.dart';
@@ -64,6 +65,82 @@ void runAppWithChangeNotifiers(
         create: (_) => ThemeModeProvider(appTheme: savedAppTheme),
         child: OpenNutriTrackerApp(userInitialized: userInitialized)));
 
+/// Route generation handler with custom page transitions
+Route<dynamic>? _onGenerateRoute(RouteSettings settings) {
+  switch (settings.name) {
+    case NavigationOptions.mainRoute:
+      return FadePageRoute(
+        settings: settings,
+        duration: const Duration(milliseconds: 300),
+        builder: (_) => const MainScreen(),
+      );
+
+    case NavigationOptions.onboardingRoute:
+      return FadePageRoute(
+        settings: settings,
+        builder: (_) => const OnboardingScreen(),
+      );
+
+    case NavigationOptions.settingsRoute:
+      return SlideRightPageRoute(
+        settings: settings,
+        builder: (_) => const SettingsScreen(),
+      );
+
+    case NavigationOptions.addMealRoute:
+      return SlideBottomPageRoute(
+        settings: settings,
+        builder: (_) => const AddMealScreen(),
+      );
+
+    case NavigationOptions.scannerRoute:
+      return FadePageRoute(
+        settings: settings,
+        builder: (_) => const ScannerScreen(),
+      );
+
+    case NavigationOptions.mealDetailRoute:
+      return SlideRightPageRoute(
+        settings: settings,
+        builder: (_) => const MealDetailScreen(),
+      );
+
+    case NavigationOptions.editMealRoute:
+      return SlideRightPageRoute(
+        settings: settings,
+        builder: (_) => const EditMealScreen(),
+      );
+
+    case NavigationOptions.addActivityRoute:
+      return SlideBottomPageRoute(
+        settings: settings,
+        builder: (_) => const AddActivityScreen(),
+      );
+
+    case NavigationOptions.activityDetailRoute:
+      return SlideRightPageRoute(
+        settings: settings,
+        builder: (_) => const ActivityDetailScreen(),
+      );
+
+    case NavigationOptions.imageFullScreenRoute:
+      return ZoomPageRoute(
+        settings: settings,
+        builder: (_) => const ImageFullScreen(),
+      );
+
+    default:
+      // Fallback for unknown routes
+      return MaterialPageRoute(
+        settings: settings,
+        builder: (_) => Scaffold(
+          appBar: AppBar(title: const Text('Route not found')),
+          body: const Center(child: Text('Route not found')),
+        ),
+      );
+  }
+}
+
 class OpenNutriTrackerApp extends StatelessWidget {
   final bool userInitialized;
 
@@ -93,23 +170,7 @@ class OpenNutriTrackerApp extends StatelessWidget {
       initialRoute: userInitialized
           ? NavigationOptions.mainRoute
           : NavigationOptions.onboardingRoute,
-      routes: {
-        NavigationOptions.mainRoute: (context) => const MainScreen(),
-        NavigationOptions.onboardingRoute: (context) =>
-            const OnboardingScreen(),
-        NavigationOptions.settingsRoute: (context) => const SettingsScreen(),
-        NavigationOptions.addMealRoute: (context) => const AddMealScreen(),
-        NavigationOptions.scannerRoute: (context) => const ScannerScreen(),
-        NavigationOptions.mealDetailRoute: (context) =>
-            const MealDetailScreen(),
-        NavigationOptions.editMealRoute: (context) => const EditMealScreen(),
-        NavigationOptions.addActivityRoute: (context) =>
-            const AddActivityScreen(),
-        NavigationOptions.activityDetailRoute: (context) =>
-            const ActivityDetailScreen(),
-        NavigationOptions.imageFullScreenRoute: (context) =>
-            const ImageFullScreen(),
-      },
+      onGenerateRoute: _onGenerateRoute,
     );
   }
 }
