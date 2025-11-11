@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:opennutritracker/core/utils/locator.dart';
+import 'package:opennutritracker/core/widgets/animations/success_animation.dart';
 import 'package:opennutritracker/features/diary/presentation/bloc/calendar_day_bloc.dart';
 import 'package:opennutritracker/features/diary/presentation/bloc/diary_bloc.dart';
 import 'package:opennutritracker/features/home/presentation/bloc/home_bloc.dart';
@@ -39,11 +40,17 @@ class ExportImportDialog extends StatelessWidget {
                     refreshScreens();
                     return Row(
                       children: [
-                        Icon(Icons.check_circle,
-                            color: Theme.of(context).colorScheme.primary),
-                        SizedBox(width: 8),
+                        BounceAnimation(
+                          child: Icon(Icons.check_circle,
+                              color: Theme.of(context).colorScheme.primary, size: 28),
+                        ),
+                        const SizedBox(width: 12),
                         Text(
                           S.of(context).exportImportSuccessLabel,
+                          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                            color: Theme.of(context).colorScheme.primary,
+                            fontWeight: FontWeight.w600,
+                          ),
                         ),
                       ],
                     );
