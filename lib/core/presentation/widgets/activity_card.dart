@@ -38,7 +38,7 @@ class ActivityCard extends StatelessWidget {
                     boxShadow: [
                       BoxShadow(
                         color: Colors.black.withValues(
-                          alpha: isDarkMode ? 0.3 : 0.12,
+                          alpha: isDarkMode ? 0.3 : 0.1,
                         ),
                         blurRadius: ONTDesignTokens.elevationCard * 2,
                         offset: Offset(0, ONTDesignTokens.elevationCard),

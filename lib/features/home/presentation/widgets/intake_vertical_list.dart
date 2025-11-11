@@ -5,6 +5,7 @@ import 'package:opennutritracker/core/presentation/widgets/copy_dialog.dart';
 import 'package:opennutritracker/core/presentation/widgets/delete_all_dialog.dart';
 import 'package:opennutritracker/core/presentation/widgets/intake_card.dart';
 import 'package:opennutritracker/core/presentation/widgets/placeholder_card.dart';
+import 'package:opennutritracker/core/styles/design_tokens.dart';
 import 'package:opennutritracker/core/utils/locator.dart';
 import 'package:opennutritracker/core/utils/navigation_options.dart';
 import 'package:opennutritracker/core/utils/vertical_list_popup_menu_selections.dart';
@@ -73,22 +74,28 @@ class _IntakeVerticalListState extends State<IntakeVerticalList> {
     return Column(
       children: [
         Container(
-          padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
+          padding: EdgeInsets.symmetric(
+            horizontal: ONTDesignTokens.spacing16,
+            vertical: ONTDesignTokens.spacing12,
+          ),
           alignment: Alignment.centerLeft,
           child: Row(
             children: [
-              Icon(widget.listIcon,
-                  size: 24, color: Theme.of(context).colorScheme.onSurface),
-              const SizedBox(width: 4.0),
+              Icon(
+                widget.listIcon,
+                size: ONTDesignTokens.iconSizeMedium,
+                color: Theme.of(context).colorScheme.onSurface,
+              ),
+              SizedBox(width: ONTDesignTokens.spacing4),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     widget.title,
-                    style: Theme.of(context)
-                        .textTheme
-                        .titleLarge
-                        ?.copyWith(color: Theme.of(context).colorScheme.onSurface),
+                    style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                      fontWeight: FontWeight.w700,
+                      color: Theme.of(context).colorScheme.onSurface,
+                    ),
                   ),
                   if (widget.intakeList.isNotEmpty)
                     Text(
@@ -165,7 +172,7 @@ class _IntakeVerticalListState extends State<IntakeVerticalList> {
                 itemCount: widget.intakeList.length + 1,
                 // List length + placeholder card
                 separatorBuilder: (context, index) =>
-                    const SizedBox(width: 8.0), // Gap between cards
+                    SizedBox(width: ONTDesignTokens.spacing8), // Gap between cards
                 itemBuilder: (BuildContext context, int index) {
                   final firstListElement = index == 0 ? true : false;
                   if (index == widget.intakeList.length) {
