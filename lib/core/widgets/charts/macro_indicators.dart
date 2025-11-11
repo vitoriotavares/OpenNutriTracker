@@ -170,39 +170,34 @@ class _MacroIndicatorsState extends State<MacroIndicators>
             ],
           ),
 
-          // Expand hint with chevron (if expandable)
+          // Expand hint with chevron (if expandable) - Always visible to show state
           if (widget.expandable)
             Padding(
               padding: EdgeInsets.only(
                 top: ONTDesignTokens.spacing8,
               ),
-              child: AnimatedOpacity(
-                opacity: _isExpanded ? 0.0 : 1.0,
-                duration: const Duration(milliseconds: 200),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    RotatedBox(
-                      quarterTurns: _isExpanded ? 2 : 0,
-                      child: AnimatedRotation(
-                        turns: _isExpanded ? 0.5 : 0,
-                        duration: const Duration(milliseconds: 300),
-                        child: Icon(
-                          Icons.expand_more,
-                          size: 20,
-                          color: Theme.of(context).colorScheme.onSurfaceVariant,
-                        ),
-                      ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  // Rotating chevron - rotates 180° when expanded
+                  AnimatedRotation(
+                    turns: _isExpanded ? 0.5 : 0,
+                    duration: const Duration(milliseconds: 300),
+                    child: Icon(
+                      Icons.expand_more,
+                      size: 20,
+                      color: Theme.of(context).colorScheme.onSurfaceVariant,
                     ),
-                    const SizedBox(width: 4),
-                    Text(
-                      'Tap for details',
-                      style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                        color: Theme.of(context).colorScheme.onSurfaceVariant,
-                      ),
+                  ),
+                  const SizedBox(width: 4),
+                  // Text changes based on state to indicate action
+                  Text(
+                    _isExpanded ? 'Tap to collapse' : 'Tap for details',
+                    style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                      color: Theme.of(context).colorScheme.onSurfaceVariant,
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
 
