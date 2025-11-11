@@ -80,12 +80,24 @@ class _IntakeVerticalListState extends State<IntakeVerticalList> {
               Icon(widget.listIcon,
                   size: 24, color: Theme.of(context).colorScheme.onSurface),
               const SizedBox(width: 4.0),
-              Text(
-                widget.title,
-                style: Theme.of(context)
-                    .textTheme
-                    .titleLarge
-                    ?.copyWith(color: Theme.of(context).colorScheme.onSurface),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    widget.title,
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleLarge
+                        ?.copyWith(color: Theme.of(context).colorScheme.onSurface),
+                  ),
+                  if (widget.intakeList.isNotEmpty)
+                    Text(
+                      '${widget.intakeList.length} ${widget.intakeList.length == 1 ? 'item' : 'items'}',
+                      style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                        color: Theme.of(context).colorScheme.onSurfaceVariant,
+                      ),
+                    ),
+                ],
               ),
               const Spacer(),
               if (totalKcal > 0) ...[
@@ -148,10 +160,12 @@ class _IntakeVerticalListState extends State<IntakeVerticalList> {
           builder: (context, candidateData, rejectedData) {
             return SizedBox(
               height: 120,
-              child: ListView.builder(
+              child: ListView.separated(
                 scrollDirection: Axis.horizontal,
                 itemCount: widget.intakeList.length + 1,
                 // List length + placeholder card
+                separatorBuilder: (context, index) =>
+                    const SizedBox(width: 8.0), // Gap between cards
                 itemBuilder: (BuildContext context, int index) {
                   final firstListElement = index == 0 ? true : false;
                   if (index == widget.intakeList.length) {

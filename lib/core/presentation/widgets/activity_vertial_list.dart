@@ -30,20 +30,34 @@ class ActivityVerticalList extends StatelessWidget {
               Icon(UserActivityEntity.getIconData(),
                   size: 24, color: Theme.of(context).colorScheme.onSurface),
               const SizedBox(width: 4.0),
-              Text(
-                title,
-                style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                    color: Theme.of(context).colorScheme.onSurface),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                        color: Theme.of(context).colorScheme.onSurface),
+                  ),
+                  if (userActivityList.isNotEmpty)
+                    Text(
+                      '${userActivityList.length} ${userActivityList.length == 1 ? 'activity' : 'activities'}',
+                      style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                        color: Theme.of(context).colorScheme.onSurfaceVariant,
+                      ),
+                    ),
+                ],
               ),
             ],
           ),
         ),
         SizedBox(
           height: 160,
-          child: ListView.builder(
+          child: ListView.separated(
             scrollDirection: Axis.horizontal,
             itemCount:
                 userActivityList.length + 1, // List length + placeholder card
+            separatorBuilder: (context, index) =>
+                const SizedBox(width: 8.0), // Gap between cards
             itemBuilder: (BuildContext context, int index) {
               final firstListElement = index == 0 ? true : false;
               if (index == userActivityList.length) {
