@@ -105,16 +105,20 @@ class _CalorieRingChartState extends State<CalorieRingChart>
   }
 
   Color _getGradientColor(double progress) {
-    // Progress-based color: green (0-0.8) → yellow (0.8-1.0) → red (1.0+)
+    // Smooth gradient transition: green (0-0.8) → yellow (0.8-1.0) → red (1.0+)
     if (progress <= 0.8) {
-      // Green (0-80%)
-      return gradientCalorieRing[0]; // Green
+      // Green to Yellow transition (0-80%)
+      final t = progress / 0.8; // Normalize to 0-1 range
+      return Color.lerp(gradientCalorieRing[0], gradientCalorieRing[1], t * 0.3) ??
+          gradientCalorieRing[0];
     } else if (progress <= 1.0) {
-      // Yellow (80-100%)
-      return gradientCalorieRing[1]; // Amber
+      // Yellow to Red transition (80-100%)
+      final t = (progress - 0.8) / 0.2; // Normalize to 0-1 range
+      return Color.lerp(gradientCalorieRing[1], gradientCalorieRing[2], t) ??
+          gradientCalorieRing[1];
     } else {
-      // Red (100%+)
-      return gradientCalorieRing[2]; // Red
+      // Red (100%+) - over goal
+      return gradientCalorieRing[2];
     }
   }
 
