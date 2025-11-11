@@ -15,8 +15,6 @@ class ActivityCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
-
     return Row(
       children: [
         SizedBox(
@@ -35,16 +33,9 @@ class ActivityCard extends StatelessWidget {
                     borderRadius:
                         BorderRadius.circular(ONTDesignTokens.radiusLarge),
                     color: Theme.of(context).colorScheme.surfaceContainer,
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withValues(
-                          alpha: isDarkMode ? 0.3 : 0.1,
-                        ),
-                        blurRadius: ONTDesignTokens.elevationCard * 2,
-                        offset: Offset(0, ONTDesignTokens.elevationCard),
-                        spreadRadius: ONTDesignTokens.elevationCard * 0.5,
-                      ),
-                    ],
+                    boxShadow: ONTDesignTokens.getShadowCard(
+                      Theme.of(context).brightness,
+                    ),
                   ),
                   child: ClipRRect(
                     borderRadius:

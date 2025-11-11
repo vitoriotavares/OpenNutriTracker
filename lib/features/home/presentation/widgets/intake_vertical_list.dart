@@ -6,6 +6,7 @@ import 'package:opennutritracker/core/presentation/widgets/delete_all_dialog.dar
 import 'package:opennutritracker/core/presentation/widgets/intake_card.dart';
 import 'package:opennutritracker/core/presentation/widgets/placeholder_card.dart';
 import 'package:opennutritracker/core/styles/design_tokens.dart';
+import 'package:opennutritracker/core/widgets/cards/modern_card.dart';
 import 'package:opennutritracker/core/utils/locator.dart';
 import 'package:opennutritracker/core/utils/navigation_options.dart';
 import 'package:opennutritracker/core/utils/vertical_list_popup_menu_selections.dart';
@@ -206,15 +207,15 @@ class _IntakeVerticalListState extends State<IntakeVerticalList> {
                       ),
                       childWhenDragging: Row(
                         children: [
-                          SizedBox(width: firstListElement ? 16 : 0),
+                          SizedBox(width: firstListElement ? ONTDesignTokens.spacing16 : 0),
                           SizedBox(
                             width: 120,
                             height: 120,
-                            child: Card(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(16.0),
-                              ),
-                              color: Theme.of(context).cardColor,
+                            child: ModernCard(
+                              variant: ModernCardVariant.outlined,
+                              elevation: 0,
+                              padding: EdgeInsets.zero,
+                              child: SizedBox.expand(),
                             ),
                           ),
                         ],

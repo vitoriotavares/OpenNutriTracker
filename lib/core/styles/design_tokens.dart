@@ -259,6 +259,31 @@ class ONTDesignTokens {
   static const double opacityPressed = 0.12;
   static const double opacityDrag = 0.16;
   static const double opacityShadow = 0.20;
+
+  /// Shadow opacity values for cards and elevated elements
+  static const double opacityCardShadowLight = 0.1;   // Light mode
+  static const double opacityCardShadowDark = 0.3;    // Dark mode
+
+  // ============================================================================
+  // SHADOW HELPER METHODS
+  // ============================================================================
+  /// Centralized shadow generation for consistent elevation effects
+
+  /// Generate standard card shadow based on theme brightness
+  /// Used for intake/activity cards with consistent depth perception
+  static List<BoxShadow> getShadowCard(Brightness brightness) {
+    final isDarkMode = brightness == Brightness.dark;
+    return [
+      BoxShadow(
+        color: Colors.black.withValues(
+          alpha: isDarkMode ? opacityCardShadowDark : opacityCardShadowLight,
+        ),
+        blurRadius: elevationCard * 2,
+        offset: Offset(0, elevationCard),
+        spreadRadius: elevationCard * 0.5,
+      ),
+    ];
+  }
 }
 
 // ============================================================================

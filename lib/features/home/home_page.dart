@@ -9,6 +9,7 @@ import 'package:opennutritracker/core/presentation/widgets/activity_vertial_list
 import 'package:opennutritracker/core/presentation/widgets/edit_dialog.dart';
 import 'package:opennutritracker/core/presentation/widgets/delete_dialog.dart';
 import 'package:opennutritracker/core/presentation/widgets/disclaimer_dialog.dart';
+import 'package:opennutritracker/core/styles/design_tokens.dart';
 import 'package:opennutritracker/core/utils/locator.dart';
 import 'package:opennutritracker/core/widgets/animations/success_animation.dart';
 import 'package:opennutritracker/core/widgets/charts/macro_indicators.dart';
@@ -226,33 +227,55 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
         const SizedBox(height: 48.0)
       ]),
       Align(
-          alignment: Alignment.bottomCenter,
-          child: Visibility(
-              visible: _isDragging,
-              child: Container(
-                height: 70,
-                color: Theme.of(context).colorScheme.error
-                  ..withValues(alpha: 0.3),
-                child: DragTarget<IntakeEntity>(
-                  onAcceptWithDetails: (data) {
-                    _confirmDelete(context, data.data);
-                  },
-                  onLeave: (data) {
-                    setState(() {
-                      _isDragging = false;
-                    });
-                  },
-                  builder: (context, candidateData, rejectedData) {
-                    return const Center(
-                      child: Icon(
-                        Icons.delete_outline,
-                        size: 36,
-                        color: Colors.white,
-                      ),
-                    );
-                  },
+        alignment: Alignment.bottomCenter,
+        child: Visibility(
+          visible: _isDragging,
+          child: Container(
+            height: ONTDesignTokens.touchTargetLarge + ONTDesignTokens.spacing16,
+            decoration: BoxDecoration(
+              color: Theme.of(context).colorScheme.error.withValues(alpha: 0.15),
+              border: Border(
+                top: BorderSide(
+                  color: Theme.of(context).colorScheme.error,
+                  width: 2.0,
                 ),
-              )))
+              ),
+            ),
+            child: DragTarget<IntakeEntity>(
+              onAcceptWithDetails: (data) {
+                _confirmDelete(context, data.data);
+              },
+              onLeave: (data) {
+                setState(() {
+                  _isDragging = false;
+                });
+              },
+              builder: (context, candidateData, rejectedData) {
+                return Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.delete_outline,
+                        size: ONTDesignTokens.iconSizeLarge,
+                        color: Theme.of(context).colorScheme.error,
+                      ),
+                      SizedBox(height: ONTDesignTokens.spacing4),
+                      Text(
+                        'Drop to delete',
+                        style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                          color: Theme.of(context).colorScheme.error,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              },
+            ),
+          ),
+        ),
+      )
     ]);
   }
 

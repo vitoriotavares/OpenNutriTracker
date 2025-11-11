@@ -26,8 +26,6 @@ class IntakeCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
-
     return Row(
       children: [
         SizedBox(width: firstListElement ? ONTDesignTokens.spacing16 : 0),
@@ -43,16 +41,9 @@ class IntakeCard extends StatelessWidget {
             height: 120,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(ONTDesignTokens.radiusLarge),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withValues(
-                    alpha: isDarkMode ? 0.3 : 0.1,
-                  ),
-                  blurRadius: ONTDesignTokens.elevationCard * 2,
-                  offset: Offset(0, ONTDesignTokens.elevationCard),
-                  spreadRadius: ONTDesignTokens.elevationCard * 0.5,
-                ),
-              ],
+              boxShadow: ONTDesignTokens.getShadowCard(
+                Theme.of(context).brightness,
+              ),
             ),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(ONTDesignTokens.radiusLarge),
