@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:opennutritracker/core/domain/entity/user_activity_entity.dart';
+import 'package:opennutritracker/core/styles/design_tokens.dart';
 
 class ActivityCard extends StatelessWidget {
   final UserActivityEntity activityEntity;
@@ -14,55 +15,101 @@ class ActivityCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+
     return Row(
       children: [
         SizedBox(
-          width: firstListElement ? 16 : 0, // Add leading padding
+          width: firstListElement ? ONTDesignTokens.spacing16 : 0,
         ),
         SizedBox(
           width: 120,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(
-                height: 120,
-                child: Card(
-                  shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(12.0)),
+              GestureDetector(
+                onLongPress: () => onLongPressedItem(context),
+                child: Container(
+                  height: 120,
+                  decoration: BoxDecoration(
+                    borderRadius:
+                        BorderRadius.circular(ONTDesignTokens.radiusLarge),
+                    color: Theme.of(context).colorScheme.surfaceContainer,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withValues(
+                          alpha: isDarkMode ? 0.3 : 0.12,
+                        ),
+                        blurRadius: ONTDesignTokens.elevationCard * 2,
+                        offset: Offset(0, ONTDesignTokens.elevationCard),
+                        spreadRadius: ONTDesignTokens.elevationCard * 0.5,
+                      ),
+                    ],
                   ),
-                  child: InkWell(
-                    onLongPress: () {
-                      onLongPressedItem(context);
-                    },
+                  child: ClipRRect(
+                    borderRadius:
+                        BorderRadius.circular(ONTDesignTokens.radiusLarge),
                     child: Stack(
                       children: [
+                        // Background with gradient
                         Container(
-                          margin: const EdgeInsets.all(8.0),
-                          padding:
-                              const EdgeInsets.fromLTRB(8.0, 4.0, 8.0, 4.0),
                           decoration: BoxDecoration(
-                              color: Theme.of(context)
-                                  .colorScheme
-                                  .tertiaryContainer
-                                  .withValues(alpha: 0.8),
-                              borderRadius: BorderRadius.circular(12)),
-                          child: Text(
-                            "🔥${activityEntity.burnedKcal.toInt()} kcal",
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodySmall
-                                ?.copyWith(
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .onTertiaryContainer),
+                            gradient: LinearGradient(
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
+                              colors: [
+                                Theme.of(context)
+                                    .colorScheme
+                                    .primary
+                                    .withValues(alpha: 0.1),
+                                Theme.of(context)
+                                    .colorScheme
+                                    .primary
+                                    .withValues(alpha: 0.05),
+                              ],
+                            ),
                           ),
                         ),
+
+                        // Activity icon centered
                         Center(
                           child: Icon(
                             activityEntity.physicalActivityEntity.displayIcon,
-                            color: Theme.of(context)
-                                .colorScheme
-                                .onSecondaryContainer,
+                            size: ONTDesignTokens.iconSizeLarge,
+                            color: Theme.of(context).colorScheme.primary,
+                          ),
+                        ),
+
+                        // Calories badge
+                        Positioned(
+                          top: ONTDesignTokens.spacing8,
+                          right: ONTDesignTokens.spacing8,
+                          child: Container(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: ONTDesignTokens.spacing8,
+                              vertical: ONTDesignTokens.spacing4,
+                            ),
+                            decoration: BoxDecoration(
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .primary
+                                  .withValues(alpha: 0.9),
+                              borderRadius: BorderRadius.circular(
+                                  ONTDesignTokens.radiusSmall),
+                            ),
+                            child: Text(
+                              "🔥 ${activityEntity.burnedKcal.toInt()}",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .labelSmall
+                                  ?.copyWith(
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .onPrimary,
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 11,
+                                  ),
+                            ),
                           ),
                         ),
                       ],
@@ -71,25 +118,41 @@ class ActivityCard extends StatelessWidget {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(left: 8.0),
+                padding: EdgeInsets.only(
+                  left: ONTDesignTokens.spacing8,
+                  top: ONTDesignTokens.spacing4,
+                ),
                 child: Text(
                   activityEntity.physicalActivityEntity.getName(context),
-                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      color: Theme.of(context).colorScheme.onSurface),
+                  style: Theme.of(context)
+                      .textTheme
+                      .labelSmall
+                      ?.copyWith(
+                        fontWeight: FontWeight.w600,
+                        color: Theme.of(context).colorScheme.onSurface,
+                        fontSize: 12,
+                      ),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
               ),
               Padding(
-                  padding: const EdgeInsets.only(left: 8),
-                  child: Text(
-                    '${activityEntity.duration.toInt()} min',
-                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        color: Theme.of(context)
-                            .colorScheme
-                            .onSurface.withValues(alpha: 0.8)),
-                    maxLines: 1,
-                  ))
+                padding: EdgeInsets.only(
+                  left: ONTDesignTokens.spacing8,
+                  top: 2,
+                ),
+                child: Text(
+                  '${activityEntity.duration.toInt()} min',
+                  style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                    color: Theme.of(context)
+                        .colorScheme
+                        .onSurface
+                        .withValues(alpha: 0.65),
+                    fontSize: 10,
+                  ),
+                  maxLines: 1,
+                ),
+              )
             ],
           ),
         ),
