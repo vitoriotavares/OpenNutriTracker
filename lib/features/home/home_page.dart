@@ -11,11 +11,15 @@ import 'package:opennutritracker/core/presentation/widgets/delete_dialog.dart';
 import 'package:opennutritracker/core/presentation/widgets/disclaimer_dialog.dart';
 import 'package:opennutritracker/core/utils/locator.dart';
 import 'package:opennutritracker/core/widgets/animations/success_animation.dart';
+import 'package:opennutritracker/core/widgets/charts/macro_indicators.dart';
 import 'package:opennutritracker/core/widgets/loaders/shimmer_skeleton.dart';
 import 'package:opennutritracker/features/add_meal/presentation/add_meal_type.dart';
 import 'package:opennutritracker/features/home/presentation/bloc/home_bloc.dart';
-import 'package:opennutritracker/features/home/presentation/widgets/dashboard_widget_enhanced.dart';
+import 'package:opennutritracker/features/home/presentation/widgets/activity_preview.dart';
+import 'package:opennutritracker/features/home/presentation/widgets/compact_dashboard.dart';
+import 'package:opennutritracker/features/home/presentation/widgets/greeting_card.dart';
 import 'package:opennutritracker/features/home/presentation/widgets/intake_vertical_list.dart';
+import 'package:opennutritracker/features/home/presentation/widgets/macros_horizontal_bars.dart';
 import 'package:opennutritracker/generated/l10n.dart';
 
 class HomePage extends StatefulWidget {
@@ -116,20 +120,59 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
     if (showDisclaimerDialog) {
       _showDisclaimerDialog(context);
     }
+    // Calculate meal and activity counts for greeting
+    int totalMealsLogged = breakfastIntakeList.length +
+        lunchIntakeList.length +
+        dinnerIntakeList.length +
+        snackIntakeList.length;
+    int totalActivitiesLogged = userActivities.length;
+
+    // Create macro data for horizontal bars
+    final macroData = MacroData(
+      protein: totalProteinsIntake,
+      carbs: totalCarbsIntake,
+      fat: totalFatsIntake,
+      proteinGoal: totalProteinsGoal,
+      carbsGoal: totalCarbsGoal,
+      fatGoal: totalFatsGoal,
+    );
+
+    // Get first activity if any
+    UserActivityEntity? firstActivity =
+        userActivities.isNotEmpty ? userActivities.first : null;
+
     return Stack(children: [
       ListView(children: [
-        DashboardWidgetEnhanced(
+        // NEW: Greeting card with dynamic message
+        GreetingCard(
+          calorieProgress: totalKcalDaily > 0
+              ? totalKcalSupplied / totalKcalDaily
+              : 0,
+          mealsLogged: totalMealsLogged,
+          activitiesLogged: totalActivitiesLogged,
+        ),
+
+        // REDESIGNED: Compact dashboard (Ring + Stats side-by-side)
+        CompactDashboard(
           totalKcalDaily: totalKcalDaily,
           totalKcalLeft: totalKcalLeft,
           totalKcalSupplied: totalKcalSupplied,
           totalKcalBurned: totalKcalBurned,
-          totalCarbsIntake: totalCarbsIntake,
-          totalFatsIntake: totalFatsIntake,
-          totalProteinsIntake: totalProteinsIntake,
-          totalCarbsGoal: totalCarbsGoal,
-          totalFatsGoal: totalFatsGoal,
-          totalProteinsGoal: totalProteinsGoal,
         ),
+
+        // NEW: Horizontal macro bars (compact, more efficient)
+        MacrosHorizontalBars(
+          macroData: macroData,
+        ),
+
+        // NEW: Activity preview (hook for scroll)
+        ActivityPreview(
+          firstActivity: firstActivity,
+          onActivityTap: (activity) {
+            // Optional: navigate to activity details
+          },
+        ),
+
         ActivityVerticalList(
           day: DateTime.now(),
           title: S.of(context).activityLabel,

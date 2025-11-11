@@ -82,18 +82,14 @@ class _TapFeedbackState extends State<TapFeedback>
 class AnimatedCounter extends ImplicitlyAnimatedWidget {
   final int value;
   final TextStyle? textStyle;
-  @override
-  final Duration duration;
-  @override
-  final Curve curve;
 
   const AnimatedCounter({
     super.key,
     required this.value,
     this.textStyle,
-    this.duration = const Duration(milliseconds: 500),
-    this.curve = Curves.easeInOut,
-  }) : super(duration: duration, curve: curve);
+    super.duration = const Duration(milliseconds: 500),
+    super.curve = Curves.easeInOut,
+  });
 
   @override
   ImplicitlyAnimatedWidgetState<AnimatedCounter> createState() =>

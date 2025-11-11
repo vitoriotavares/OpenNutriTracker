@@ -1,0 +1,222 @@
+PRODUCT REQUIREMENTS DOCUMENT (PRD)
+OpenNutriTracker UI/UX Transformation to YAZIO Level
+Version 1.0 | 2025-11-10
+
+=== PROJECT OVERVIEW ===
+
+Title: OpenNutriTracker Visual & UX Transformation
+Duration: 8 weeks (42 tasks across 4 phases)
+Objective: Transform OpenNutriTracker into a YAZIO-level competitor while maintaining privacy-first philosophy
+
+Success Metrics:
+- Visual Appeal Score: 4/10 → 9/10
+- Logging Speed: 8 taps → 3 taps
+- User Engagement: +40%
+- D7 Retention: +20%
+- D30 Retention: +35%
+
+=== PHASE 1: VISUAL REFRESH (Weeks 1-2) ===
+
+Objective: Transform appearance without changing functionality
+
+Week 1: Design System Foundation
+
+Task 1.1: Setup Design Tokens
+Create lib/core/styles/design_tokens.dart with spacing scale (4,8,12,16,24,32,48dp), radius scale (8,12,16,24dp), elevation scale (2,4,8dp), animation durations (200ms,300ms,500ms), and usage guidelines documentation.
+
+Task 1.2: Color System Enhancement
+Update lib/core/styles/color_schemes.dart to add macro colors (Protein=#4A90E2, Carbs=#F5A623, Fat=#FFC107), gradient definitions, semantic colors (success, warning, error), and colored shadow utilities.
+
+Task 1.3: Theme Factory
+Create lib/core/styles/app_theme.dart with ThemeData factory for light mode, ThemeData factory for dark mode, extension methods for Theme access, and custom TextTheme with Poppins weights.
+
+Task 1.4: Typography Enhancement
+Update lib/core/styles/fonts.dart to create custom TextStyles with semantic naming, DisplayLarge for hero numbers (Poppins Bold 57sp), HeadlineLarge for section titles (Poppins SemiBold 32sp), TitleLarge for card headers (Poppins Medium 22sp), and hierarchy usage documentation.
+
+Week 2: Dashboard Modernization
+
+Task 1.5: Enhanced Calorie Ring
+Create lib/core/widgets/charts/calorie_ring_chart.dart with increased radius (90px to 140px), gradient implementation (green to yellow to red), inner shadow effect, animated value transitions, and responsive sizing.
+
+Task 1.6: Macro Nutrient Visualization
+Create lib/core/widgets/charts/macro_indicators.dart with color-coded macros (blue/orange/yellow), mini circular indicators, percentage labels in Poppins SemiBold, and tap to expand functionality.
+
+Task 1.7: Modern Card Component
+Create lib/core/widgets/cards/modern_card.dart with dynamic elevation (1 to 3-4), colored shadows (10% opacity), 16dp border radius, gradient overlay option, and glassmorphism variant.
+
+Task 1.8: Refactor Dashboard
+Update lib/features/home/home_page.dart to integrate new CalorieRingChart, apply ModernCard to widgets, increase font weights of key numbers, implement variable spacing, and add subtle gradients.
+
+Task 1.9: Card Updates Across App
+Update lib/core/widgets/intake_card.dart with new elevation system, shadows, and improved image overlay contrast. Update lib/core/widgets/activity_card.dart with modern card styling and enhanced shadows.
+
+Task 1.10: Icon System
+Create custom meal category icons (Breakfast=coffee, Lunch=bowl, Dinner=utensils, Snacks=apple) and add to lib/core/presentation/widgets/.
+
+=== PHASE 2: UX OPTIMIZATION (Weeks 3-4) ===
+
+Objective: Reduce friction in logging from 8 to 3-4 taps
+
+Week 3: Quick Actions Implementation
+
+Task 2.1: Speed Dial FAB
+Create lib/core/widgets/misc/speed_dial_fab.dart with expandable FAB (Meal, Activity options), spring animation on expand, backdrop dim on open, and integration in main_screen.dart.
+
+Task 2.2: Quick Add Buttons
+Create lib/features/home/widgets/quick_add_button.dart with small button component, icon + label, and integration in each meal section.
+
+Task 2.3: Log Again Feature
+Update lib/core/widgets/intake_card.dart to add "Log Again" button, icon button in corner, duplicate meal logic, and success feedback animation.
+
+Task 2.4: Scanner Quick Access
+Update navigation to add scanner to speed dial or floating scanner button on home, and refactor scanner access flow.
+
+Week 4: Enhanced Interactions
+
+Task 2.5: Modern Bottom Sheet
+Create lib/core/widgets/sheets/modern_bottom_sheet.dart with drag indicator visual, snap points (25%, 50%, 100%), spring physics for drag, blur backdrop (BackdropFilter), and keyboard-aware sizing.
+
+Task 2.6: Refactor Add Meal Bottom Sheet
+Update lib/core/widgets/add_item_bottom_sheet.dart to use ModernBottomSheet base, improve layout, and add animated transitions.
+
+Task 2.7: Collapsible Meal Sections
+Create lib/features/home/widgets/collapsible_meal_section.dart with customized ExpansionTile, smooth expand/collapse animation, persistent state, and empty state collapse by default.
+
+Task 2.8: Enhanced Search
+Update lib/features/add_meal/presentation/widgets/meal_search_bar.dart with floating search bar (sticky on scroll), remember last used tab, clear button with animation, and search history.
+
+Task 2.9: Swipe Actions
+Implement swipe-to-delete using flutter_slidable package with custom delete background (red gradient), edit background (blue gradient), and confirmation dialog animation.
+
+Task 2.10: Pull to Refresh
+Add pull-to-refresh to Home and Diary pages with custom refresh indicator, ONT logo animation, and haptic feedback on trigger.
+
+=== PHASE 3: ANIMATIONS & DELIGHT (Weeks 5-6) ===
+
+Objective: Add premium polish layer with fluid animations
+
+Week 5: Core Animations
+
+Task 3.1: Dependencies Setup
+Add to pubspec.yaml: flutter_staggered_animations ^1.1.1, shimmer ^3.0.0, confetti ^0.7.0. Run flutter pub get and build_runner build.
+
+Task 3.2: Hero Animations
+Implement Hero transition from meal card to detail screen (tag: meal-${intake.id}) with smooth image transition. Implement Hero transition for activity cards.
+
+Task 3.3: Page Transitions
+Create lib/core/animations/page_transitions.dart with SharedAxisPageRoute, FadeThroughPageRoute, and custom curves. Apply to main navigations.
+
+Task 3.4: Staggered List Animations
+Update meal lists with AnimationConfiguration.staggeredList, SlideAnimation + FadeInAnimation, 50ms delay between items. Apply to diary list and search results.
+
+Task 3.5: Micro-interactions Library
+Create lib/core/animations/micro_interactions.dart with ScaleAnimation for buttons, PulseAnimation for achievements, ShakeAnimation for errors, and BounceAnimation for success.
+
+Week 6: Loading States & Celebrations
+
+Task 3.6: Shimmer Loading
+Create lib/core/widgets/cards/shimmer_card.dart with meal card skeleton, activity card skeleton, and dashboard skeleton. Implement in all loading states.
+
+Task 3.7: Progressive Image Loading
+Update CachedNetworkImage usage with BlurHash placeholders, fade-in animation (300ms), error state with icon, and retry on error.
+
+Task 3.8: Success Animations
+Create lib/core/animations/celebration_animations.dart with checkmark animation (Lottie or custom), confetti for 100% goal, pulse animation for milestone. Integrate in add meal success and goal achievement.
+
+Task 3.9: Haptic Feedback
+Add HapticFeedback calls with light impact on button press, medium impact on success, heavy impact on achievement, and selection feedback on swipe.
+
+Task 3.10: Button Animations
+Update all buttons with scale down on press (0.98), spring back on release, ripple color customization, and loading state with spinner.
+
+=== PHASE 4: DATA VIZ & INSIGHTS (Weeks 7-8) ===
+
+Objective: Transform data into visual insights
+
+Week 7: Charts Implementation
+
+Task 4.1: Dependencies Setup
+Add to pubspec.yaml: fl_chart ^0.69.0, lottie ^3.0.0 (optional). Run flutter pub get.
+
+Task 4.2: Weekly Trend Chart
+Create lib/core/widgets/charts/weekly_trend_chart.dart with LineChart (fl_chart), 7-day calorie data, gradient fill under line, touch tooltips, and animated drawing.
+
+Task 4.3: Macro Donut Chart
+Create lib/core/widgets/charts/macro_donut_chart.dart with PieChart, color-coded segments (protein/carbs/fat), center text overlay, touch interactions, and animated segments.
+
+Task 4.4: Sparklines
+Create lib/core/widgets/charts/sparkline.dart with mini line chart, 7-day trend, no axes (just line), and reusable component.
+
+Task 4.5: Weight Progress Chart
+Create lib/core/widgets/charts/weight_progress_chart.dart with LineChart (weight over time), goal line indicator, trend projection, and integration in Profile page.
+
+Week 8: Insights & Gamification
+
+Task 4.6: Insights Feature
+Create lib/features/insights/ structure with presentation/insights_page.dart, presentation/bloc/, presentation/widgets/. Add "Insights" tab or integrate with Diary.
+
+Task 4.7: Streak Tracking
+Create lib/core/widgets/misc/streak_badge.dart with fire icon and count, animated flame, tap to view details. Implement streak logic (consecutive days calculation, Hive storage, reset logic). Add to dashboard top.
+
+Task 4.8: Achievement System
+Create lib/features/insights/widgets/achievement_card.dart with badge icon, title, progress indicator, unlock animation. Define achievements (7-day, 30-day, 100 meals, goal achieved 7 days, perfect macro day). Store in Hive.
+
+Task 4.9: Enhanced Diary Visualizations
+Update lib/features/diary/diary_page.dart with weekly summary card, heatmap calendar (streak visualization), comparison view toggle, and pattern insights widget.
+
+Task 4.10: Empty State Illustrations
+Create lib/core/widgets/misc/empty_state.dart with Lottie animation or custom illustration, title + description, CTA button. Apply to empty meal sections, no search results, empty diary day, no activities.
+
+=== DESIGN SYSTEM DOCUMENTATION ===
+
+Task DS.1: Component Documentation
+Create docs/DESIGN_SYSTEM.md with color palette (hex codes), typography scale, spacing system, component library reference, animation guidelines, and usage examples.
+
+Task DS.2: Storybook/Widgetbook (Optional)
+Setup Widgetbook package and create stories for ModernCard variants, button states, chart components, and loading states.
+
+=== TESTING & QA ===
+
+Task QA.1: Visual Regression Testing
+Setup golden tests and create golden files for dashboard variations, card components, chart widgets, and empty states.
+
+Task QA.2: Performance Testing
+Profile dashboard rendering, list scrolling performance, animation frame rate. Ensure 60fps on all screens.
+
+Task QA.3: Accessibility Audit
+Test with TalkBack (Android) and VoiceOver (iOS). Verify color contrast ratios and touch target sizes (≥48x48dp). Verify semantic labels.
+
+Task QA.4: Cross-Device Testing
+Test on Android (various sizes), iOS (various sizes), dark mode, light mode, and tablet layouts.
+
+=== DOCUMENTATION ===
+
+Task DOC.1: Update CLAUDE.md
+Add design system section, document new component structure, add animation guidelines, update development workflow.
+
+Task DOC.2: Create CHANGELOG.md
+Document all UI/UX changes, version 2.0.0 release notes, and migration guide.
+
+Task DOC.3: Update README.md
+Add screenshots of new UI, update feature list, add design credits.
+
+=== DEPLOYMENT ===
+
+Task DEPLOY.1: Pre-Release Checklist
+Verify all tests passing, performance benchmarks met, accessibility compliance, documentation complete, screenshots updated.
+
+Task DEPLOY.2: Beta Testing
+Release beta build, gather user feedback, address critical issues, iterate on polish.
+
+Task DEPLOY.3: Production Release
+Version bump (2.0.0), update app store screenshots, write release notes, submit to stores.
+
+=== KEY PRINCIPLES ===
+
+- Maintain privacy-first philosophy in all features
+- All animations must have reduced motion option
+- Ensure accessibility in all visual changes
+- Document important decisions
+- Performance priority - 60fps always
+- Design system consistency
+- User-centric UX improvements
