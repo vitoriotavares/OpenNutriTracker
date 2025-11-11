@@ -12,7 +12,7 @@ import 'package:opennutritracker/core/presentation/widgets/disclaimer_dialog.dar
 import 'package:opennutritracker/core/utils/locator.dart';
 import 'package:opennutritracker/features/add_meal/presentation/add_meal_type.dart';
 import 'package:opennutritracker/features/home/presentation/bloc/home_bloc.dart';
-import 'package:opennutritracker/features/home/presentation/widgets/dashboard_widget.dart';
+import 'package:opennutritracker/features/home/presentation/widgets/dashboard_widget_enhanced.dart';
 import 'package:opennutritracker/features/home/presentation/widgets/intake_vertical_list.dart';
 import 'package:opennutritracker/generated/l10n.dart';
 
@@ -118,7 +118,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
     }
     return Stack(children: [
       ListView(children: [
-        DashboardWidget(
+        DashboardWidgetEnhanced(
           totalKcalDaily: totalKcalDaily,
           totalKcalLeft: totalKcalLeft,
           totalKcalSupplied: totalKcalSupplied,
