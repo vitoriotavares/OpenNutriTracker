@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../core/styles/design_tokens.dart';
 import '../../../../core/widgets/cards/modern_card.dart';
+import '../../../../core/widgets/cards/modern_card_showcase.dart';
 import '../../../../core/widgets/charts/calorie_ring_chart.dart';
 import '../../../../core/widgets/charts/macro_indicators.dart';
 import '../../../../generated/l10n.dart';
@@ -156,6 +157,34 @@ class _DashboardWidgetEnhancedState extends State<DashboardWidgetEnhanced> {
               ],
             ),
           ),
+
+          // Card Design System Showcase
+          SizedBox(height: ONTDesignTokens.spacing24),
+          ModernCard(
+            padding: EdgeInsets.all(ONTDesignTokens.spacing16),
+            elevation: ONTDesignTokens.elevationCard,
+            variant: ModernCardVariant.standard,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Card Design System',
+                  style: Theme.of(context)
+                      .textTheme
+                      .titleLarge
+                      ?.copyWith(fontWeight: FontWeight.w700),
+                ),
+                SizedBox(height: ONTDesignTokens.spacing12),
+                Text(
+                  'All 6 card variants for consistent UI design:',
+                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                    color: Theme.of(context).colorScheme.onSurfaceVariant,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          ModernCardShowcase(horizontal: false),
         ],
       ),
     );
